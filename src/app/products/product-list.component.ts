@@ -6,6 +6,10 @@ import { Component } from "@angular/core";
 }) 
 export class ProductListComponent {
     pageTitle: string = 'Product List';
+    imageWidth: number = 50;
+    imageMargin: number = 2;
+    showImage: boolean = false;
+    listFilter: string = 'cart';
     //Any is a type that we use when we don't care the data type. 
     products: any[] = [
         {
@@ -16,7 +20,7 @@ export class ProductListComponent {
             "description": "Something dark but green at the same time",
             "price": 32.99,
             "starRating": 4.2,
-            "imageUrl": "https://www.clipart.com/images/picks/animals/14292249.jpg"
+            "imageUrl": "https://openclipart.org/image/300px/svg_to_png/58471/garden_cart.png"
         },
         {
             "productId" : 5,
@@ -26,7 +30,12 @@ export class ProductListComponent {
             "description": "Something dark but green at the same time",
             "price": 52.99,
             "starRating": 4.8,
-            "imageUrl": "http://images.clipart.com/thw/thw13//CL/5344_2005010018/000803_1080_40/20253971.thc.jpg?000803_1080_4042_v__v"
+            "imageUrl": "https://openclipart.org/image/300px/svg_to_png/73/rejon_Hammer.png"
         }
-    ]
+    ];
+
+    //Methods are written after the properties, by convention
+    toggleImage() : void {
+        this.showImage = !this.showImage;
+    }
 }

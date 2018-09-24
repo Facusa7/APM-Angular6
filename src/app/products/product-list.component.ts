@@ -1,17 +1,28 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { IProduct } from "./product";
 
 @Component({
     selector: 'pm-products',
-    templateUrl: './product-list.component.html'
+    templateUrl: './product-list.component.html',
+    styleUrls: ['./product-list.component.css'] //We can add more style sheets here separated by commas
 }) 
-export class ProductListComponent {
+export class ProductListComponent implements OnInit{
     pageTitle: string = 'Product List';
     imageWidth: number = 50;
     imageMargin: number = 2;
     showImage: boolean = false;
-    listFilter: string = 'cart';
+    _listFilter: string;
+    get listFilter(): string {
+        return this._listFilter;
+    }
+    set listFilter(value: string) {
+        this._listFilter = value;
+        this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
+    }
     //Any is a type that we use when we don't care the data type. 
-    products: any[] = [
+
+    filteredProducts: IProduct[];
+    products: IProduct[] = [
         {
             "productId" : 2,
             "productName": "Garden Cart",
@@ -34,8 +45,25 @@ export class ProductListComponent {
         }
     ];
 
+    //The constructor is a function that is executed when the component is initialized. 
+    //This is the best place to initialize complex values such as filteredProducts. 
+    constructor() {
+        this.filteredProducts = this.products;
+        this.listFilter = 'cart';
+    }
+
+    performFilter(filterBy: string) : IProduct[]{
+        filterBy = filterBy.toLocaleLowerCase();
+        return this.products.filter((product, IProduct) => 
+        product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+    }
+
     //Methods are written after the properties, by convention
     toggleImage() : void {
         this.showImage = !this.showImage;
+    }
+
+    ngOnInit(): void {
+        console.log('In OnInit');
     }
 }

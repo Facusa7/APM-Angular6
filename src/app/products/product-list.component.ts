@@ -12,6 +12,8 @@ export class ProductListComponent implements OnInit{
     imageWidth: number = 50;
     imageMargin: number = 2;
     showImage: boolean = false;
+    errorMessage: string;
+
     _listFilter: string;
     get listFilter(): string {
         return this._listFilter;
@@ -47,7 +49,13 @@ export class ProductListComponent implements OnInit{
     }
     //since ngOnInit hook is executed after the constructor, we need to initialize the filtered product variable here
     ngOnInit(): void {
-        this.products = this.productService.getProducts();
-        this.filteredProducts = this.products;
+        this.productService.getProducts().subscribe(
+            products => {
+                this.products = products;//when the suscriber emits the data, we set the products property
+                this.filteredProducts = this.products //this way filtered products will be assigned when we actually got the data
+            }, 
+            error => this.errorMessage = <any>error //casting the error to any
+        );
+        
     }
 }

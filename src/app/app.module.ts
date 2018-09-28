@@ -10,6 +10,7 @@ import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe';
 import { StarComponent } from './shared/star.component';
 import { ProductDetailComponent } from './products/product-detail.component';
 import { WelcomeComponent } from './home/welcome.component';
+import { ProductDetailGuard } from './products/product-detail.guard';
 
 @NgModule({
   declarations: [AppComponent, ProductListComponent, ConvertToSpacesPipe, StarComponent, ProductDetailComponent, WelcomeComponent],//this component belongs to this module 
@@ -23,7 +24,7 @@ import { WelcomeComponent } from './home/welcome.component';
     RouterModule.forRoot([
       { path: 'products', component: ProductListComponent},
       { path: 'products/:id', component: ProductDetailComponent},
-      { path: 'welcome', component: WelcomeComponent},
+      { path: 'welcome', canActivate: [ProductDetailGuard] ,component: WelcomeComponent},
       { path: '', component: WelcomeComponent, pathMatch: 'full'}, //Default route
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'} //When the url does not match, it's often used for 404 pages
     ], {useHash: true})], 

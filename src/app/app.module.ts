@@ -23,11 +23,11 @@ import { ProductDetailGuard } from './products/product-detail.guard';
     //The order is important, the specific ones must be first, then the other ones. 
     RouterModule.forRoot([
       { path: 'products', component: ProductListComponent},
-      { path: 'products/:id', component: ProductDetailComponent},
-      { path: 'welcome', canActivate: [ProductDetailGuard] ,component: WelcomeComponent},
+      { path: 'products/:id', canActivate: [ProductDetailGuard], component: ProductDetailComponent},
+      { path: 'welcome', component: WelcomeComponent},
       { path: '', component: WelcomeComponent, pathMatch: 'full'}, //Default route
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'} //When the url does not match, it's often used for 404 pages
-    ], {useHash: true})], 
+    ], {useHash: false})], 
   bootstrap: [AppComponent] //Defines the startup component of the application. 
 })
 export class AppModule { }
